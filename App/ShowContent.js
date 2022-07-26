@@ -14,7 +14,9 @@ const ShowContent = ({route, navigation}) => {
   const Img = route.params.Img;
   const {width} = useWindowDimensions();
   const [Loading, setLoading] = useState(false);
-
+  // now we are getting the news detail from the server while the user is on the news detail page and when he navigates back to the news list page
+  // and we are setting the news detail to the state
+  // and we are also setting the loading state to true
   const getContent = () => {
     if (ID === Data.id) {
       return (

@@ -5,10 +5,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../HomeScreen';
 import ShowContent from '../ShowContent';
 import AllNews from '../AllNews';
-import {Button, View} from 'react-native';
-import WebSite from '../WebSite';
+import {View} from 'react-native';
 
 const Stack = createNativeStackNavigator();
+// here we are creating a screen option style
 const screenOptionStyle = {
   headerStyle: {
     backgroundColor: '#9AC4F8',
@@ -17,6 +17,7 @@ const screenOptionStyle = {
   headerTintColor: 'white',
   headerBackTitle: 'Back',
 };
+// here we are creating Stack navigator  for the home screen
 const MainStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator>
@@ -52,6 +53,9 @@ const MainStackNavigator = ({navigation}) => {
     </Stack.Navigator>
   );
 };
+// here we are creating Stack navigator  for the all news screen
+// and we are passing the screen option style as a prop to the Stack navigator
+// and the screen option style is the screen option style we created above
 
 const ALlNews = () => {
   return (

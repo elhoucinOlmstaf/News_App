@@ -23,6 +23,7 @@ const CustomSidebarMenu = props => {
         source={require('../../App/asset/Images/AppLogo.png')}
         style={styles.sideMenuProfileIcon}
       />
+     
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>

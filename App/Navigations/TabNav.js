@@ -5,11 +5,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {MainStackNavigator, ALlNews} from '../Navigations/AppStack';
 
 const Tab = createBottomTabNavigator();
-
+// here we are creating a tab navigator for the app stack navigator
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({route }) => ({
+        // here we are setting the icon for each tab
+        // and we are checking the route name to set the icon
+        // and we are setting the title for each tab
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           if (route.name === 'Басты бет') {
@@ -26,7 +29,6 @@ const BottomTabNavigator = () => {
           );
         },
         headerShown: false,
-        // tabBarStyle: {display: route.name === 'ShowContent' ? 'none' : 'flex'},
       })}
       tabBarOptions={{
         activeTintColor: '#DE3163',

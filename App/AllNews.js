@@ -6,17 +6,18 @@ import {
   Text,
   View,
   Dimensions,
-  useWindowDimensions,
   TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import RenderHtml from 'react-native-render-html';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+const {width, height} = Dimensions.get('window');
 const AllNews = ({navigation}) => {
-  const {width, height} = useWindowDimensions('window');
-  //Get All News
+  // state for the news list data and the news list data is fetched from the server using the API call
   const [News, setNews] = useState('');
+  // here we are getting the all news from the server
+  // and we are setting the news to the state
   const AllNews = () => {
     try {
       fetch('https://turkistankelbety.kz/wp-json/wp/v2/posts?_embed')
@@ -28,7 +29,9 @@ const AllNews = ({navigation}) => {
       alert(error);
     }
   };
-  // navigate to ShowContent
+  // here we are navigating to the news detail page
+  // and we are passing the news id as a prop to the news detail page
+  // and the news id is the id of the news
   const navigateToShowContent = item => {
     navigation.navigate('ShowContent', {
       Id: item.id,
@@ -36,12 +39,14 @@ const AllNews = ({navigation}) => {
       Img: item._embedded['wp:featuredmedia'][0].source_url,
     });
   };
+  // here we are using the useEffect hook to get the news
   useEffect(() => {
     AllNews();
   }, []);
 
   return (
     <View>
+      {/* here we are using FlatList to list all the new that are coming from the API */}
       <FlatList
         data={News}
         renderItem={({item}) => (
@@ -52,24 +57,9 @@ const AllNews = ({navigation}) => {
                   source={{
                     uri: item._embedded['wp:featuredmedia'][0].source_url,
                   }}
-                  style={{
-                    width: width - 20,
-                    height: height / 3.5,
-                    alignSelf: 'center',
-                    margin: 10,
-                  }}
+                  style={styles.imageStyle}
                 />
-                <Text
-                  style={{
-                    fontSize: 22,
-                    flexWrap: 'wrap',
-                    fontWeight: 'bold',
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    marginTop: 15,
-                  }}>
-                  {item.title.rendered}
-                </Text>
+                <Text style={styles.title}>{item.title.rendered}</Text>
                 <View style={{flexDirection: 'row'}}>
                   <Icon
                     size={17}
@@ -96,7 +86,7 @@ const AllNews = ({navigation}) => {
                 <TouchableOpacity
                   style={{marginLeft: 10, marginBottom: 40, marginTop: -20}}
                   onPress={() => navigateToShowContent(item)}>
-                  <Text style={{color: 'blue'}}>Read more >> </Text>
+                  <Text style={{color: 'blue'}}>Read more </Text>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
@@ -115,4 +105,19 @@ const AllNews = ({navigation}) => {
 
 export default AllNews;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  imageStyle: {
+    width: width - 20,
+    height: height / 3.5,
+    alignSelf: 'center',
+    margin: 10,
+  },
+  title: {
+    fontSize: 22,
+    flexWrap: 'wrap',
+    fontWeight: 'bold',
+    marginLeft: 10,
+    marginBottom: 10,
+    marginTop: 15,
+  },
+});

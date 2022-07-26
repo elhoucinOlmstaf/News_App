@@ -7,20 +7,20 @@ import {
   Dimensions,
   ScrollView,
   ImageBackground,
+  StyleSheet,
 } from 'react-native';
 import React, {createRef, useEffect, useRef, useState} from 'react';
 import Animation from './Animation/Animation';
 import {useNavigation} from '@react-navigation/native';
 
+const {width} = Dimensions.get('window');
 const HomeScreen = ({navigation}) => {
-  const [users, setUsers] = useState([]);
-  const {navigate} = useNavigation();
-  const {width, height} = Dimensions.get('window');
-  const scrollViewRef = createRef();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [users, setUsers] = useState([]);
+  const scrollViewRef = createRef();
   const [isLoading, setIsLoading] = useState(false);
 
-  //const time ()=>{}
+  // here we select the index of the news item that the user is on
   const SelctedIndex = event => {
     const ViewSize = event.nativeEvent.layoutMeasurement.width;
     const ContentOffset = event.nativeEvent.contentOffset.x;
@@ -28,7 +28,10 @@ const HomeScreen = ({navigation}) => {
     setCurrentIndex(selctedIndex);
   };
 
-  /// I am fethcing data
+  /// here we are getting the news from the server
+  // and we are setting the news to the state
+  // and we are also setting the loading state to true
+  // and we are also setting the current index to 0
   const fetchData = () => {
     try {
       fetch('https://turkistankelbety.kz/wp-json/wp/v2/posts?_embed')
@@ -43,7 +46,8 @@ const HomeScreen = ({navigation}) => {
       alert(err);
     }
   };
-  // navigate to ShowContent
+  // here we navigate to the news detail page
+  // and we are passing the news detail to the news detail page
   const navigateToShowContent = item => {
     navigation.navigate('ShowContent', {
       Id: item.id,
@@ -51,16 +55,22 @@ const HomeScreen = ({navigation}) => {
       Img: item._embedded['wp:featuredmedia'][0].source_url,
     });
   };
+  // now we are getting the news detail from the server while the user
+  // is on the news detail page and when he navigates back to the news list page
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+      {/* here checking if the the state if loading is false then we show animation
+          because the date is not loaded yet.
+          if the state is loading then we show the news list
+      */}
+
       {isLoading == false ? (
         <View style={{marginTop: -120}}>
           <Animation />
-
           <View style={{marginTop: 0, alignItems: 'center'}}>
             <Text style={{fontSize: 29, fontWeight: 'bold'}}>Loading...</Text>
           </View>
@@ -81,26 +91,8 @@ const HomeScreen = ({navigation}) => {
                     }}
                     style={{width: width, height: 200}}
                   />
-                  <View
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'black',
-                      opacity: 0.6,
-                      alignItems: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#fff',
-                        fontSize: 17,
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                      }}>
+                  <View style={styles.headerTitlecontainer}>
+                    <Text style={styles.headerTitle}>
                       {item.title.rendered}
                     </Text>
                   </View>
@@ -108,32 +100,17 @@ const HomeScreen = ({navigation}) => {
               </TouchableOpacity>
             ))}
           </ScrollView>
-          <View
-            style={{
-              position: 'absolute',
-              top: 180,
-              height: 10,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignSelf: 'center',
-            }}>
+          <View style={styles.dotsContainer}>
             {users.map((Image, index) => (
               <View
                 key={index}
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
-                  backgroundColor: '#fff',
-                  margin: 5,
-                  opacity: currentIndex === index ? 0.5 : 1,
-                }}>
-                {/* <Text>hhh</Text> */}
-              </View>
+                style={[
+                  styles.dots.backgroundColor,
+                  {opacity: currentIndex === index ? 0.5 : 1},
+                ]}></View>
             ))}
           </View>
-
+          {/* here we are showing the news in FlatList */}
           <FlatList
             data={users}
             renderItem={({item, index}) => (
@@ -170,5 +147,42 @@ const HomeScreen = ({navigation}) => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  headerTitlecontainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    opacity: 0.6,
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 17,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  dotsContainer: {
+    position: 'absolute',
+    top: 180,
+    height: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  dots: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    margin: 5,
+  },
+});
 
 export default HomeScreen;

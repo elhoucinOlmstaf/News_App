@@ -9,6 +9,9 @@ import React from 'react';
 
 const WebSite = () => {
   const {height} = useWindowDimensions();
+  // here we are going to use the Linking module to open the url in the browser
+  // and we are passing the url to the Linking module
+  //
   function goToSite() {
     Linking.openURL('https:turkistankelbety.kz');
   }

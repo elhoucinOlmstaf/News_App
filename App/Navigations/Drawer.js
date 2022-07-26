@@ -13,7 +13,8 @@ import CustomSidebarMenu from './CustomSidebarMenu';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Drawer = createDrawerNavigator();
-
+// here we are creating a drawer navigator for the app stack navigator
+// and we are passing the drawer navigator as a prop to the navigation container to wrap the whole app
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
@@ -24,6 +25,10 @@ const DrawerNavigator = () => {
         drawerActiveBackgroundColor: '#00a8ff',
         drawerActiveTintColor: '#fff',
       }}
+      // her we are creating  drawer content for the app stack navigator
+      // and we are passing the drawer content as a prop to the drawer navigator to wrap the whole app
+      // and the drawer content is the drawer content we created in the CustomSidebarMenu.js
+      
       drawerContent={props => <CustomSidebarMenu {...props} />}>
       <Drawer.Screen
         name="Home"
