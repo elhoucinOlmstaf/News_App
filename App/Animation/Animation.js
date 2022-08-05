@@ -1,13 +1,14 @@
 import React, {useRef, useEffect} from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import LottieView from 'lottie-react-native';
-
+// hello every one where did you the beer
+// so the beer here is Haram .it means that it is forbidden
 const {width, height} = Dimensions.get('window');
 export default function Animation() {
   const animation = useRef(null);
   useEffect(() => {
     // You can control the ref programmatically, rather than using autoPlay
-    // animation.current?.play();
+    animation.current?.play();
   }, []);
 
   return (
@@ -25,7 +26,7 @@ export default function Animation() {
     </View>
   );
 }
-
+                                                                                                                                        
 const styles = StyleSheet.create({
   animationContainer: {
     backgroundColor: '#fff',

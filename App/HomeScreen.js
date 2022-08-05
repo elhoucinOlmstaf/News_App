@@ -53,6 +53,7 @@ const HomeScreen = ({navigation}) => {
       Id: item.id,
       Data: item,
       Img: item._embedded['wp:featuredmedia'][0].source_url,
+      title: item.title.rendered,
     });
   };
   // now we are getting the news detail from the server while the user

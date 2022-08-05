@@ -48,7 +48,10 @@ const MainStackNavigator = ({navigation}) => {
       <Stack.Screen
         name="ShowContent"
         component={ShowContent}
-        options={{title: null}}
+        //  daynamic title
+        options={({route}) => ({
+          title: route.params.title,
+        })}
       />
     </Stack.Navigator>
   );

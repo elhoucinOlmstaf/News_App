@@ -1,4 +1,4 @@
-package com.newsapp; //change your package name
+package com.newsapphahahaha; //change your package name
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
